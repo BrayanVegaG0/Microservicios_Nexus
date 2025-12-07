@@ -1,0 +1,128 @@
+version: '3.8'
+
+services:
+  # --- BASE DE DATOS NEXUS ---
+  postgres-nexus:
+    image: postgres:15-alpine
+    container_name: nexus-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 12345
+    ports:
+      # CORRECCIÓN VITAL:
+      # Izquierda (Windows): 5433 (Tu puerto personalizado)
+      # Derecha (Container): 5432 (Donde Postgres escucha SIEMPRE)
+      - "5433:5432"
+    volumes:
+      - ./postgres-data-nexus:/var/lib/postgresql/data
+      - ./init-nexus.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - red-nexus
+
+  # --- EUREKA NEXUS ---
+  discovery-nexus:
+    build: ./discovery-server
+    container_name: discovery-nexus
+    environment:
+      # Forzamos a Eureka a usar su puerto estándar interno
+      - SERVER_PORT=8761
+    ports:
+      # Izquierda (Windows): 8762 (Tu puerto personalizado)
+      # Derecha (Container): 8761 (Puerto real de la app)
+      - "8762:8761"
+    networks:
+      - red-nexus
+
+  # --- GATEWAY NEXUS ---
+  gateway-nexus:
+    build: ./gateway-server
+    container_name: gateway-nexus
+    environment:
+      - SERVER_PORT=8080
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-nexus:8761/eureka
+    ports:
+      # Izquierda (Windows): 9090 (Tu puerto personalizado)
+      # Derecha (Container): 8080 (Puerto real de la app)
+      - "9090:8080"
+    depends_on:
+      - discovery-nexus
+    networks:
+      - red-nexus
+
+  # --- CBS (CUENTAS) NEXUS ---
+  ms-cbs-nexus:
+    build: ./cbs/cbs
+    container_name: ms-cbs-nexus
+    environment:
+      # Forzamos puerto interno estándar 8080
+      - SERVER_PORT=8080
+      # CORRECCIÓN VITAL BD: Apuntamos al puerto 5432 (Interno)
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://nexus-db:5432/db_nexus_cbs
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=12345
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-nexus:8761/eureka
+    depends_on:
+      - postgres-nexus
+      - discovery-nexus
+    networks:
+      - red-nexus
+
+  # --- TRANSACCIONES NEXUS ---
+  ms-transacciones-nexus:
+    build: ./ms-transacciones
+    container_name: ms-transacciones-nexus
+    environment:
+      - SERVER_PORT=8080
+      # CORRECCIÓN VITAL BD: Apuntamos al puerto 5432 (Interno)
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://nexus-db:5432/db_nexus_transacciones
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=12345
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - APP_BANCO_ID=3
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-nexus:8761/eureka
+      # Comunicación interna usa puertos internos (8080)
+      - MS_CUENTAS_URL=http://ms-cbs-nexus:8080
+    depends_on:
+      - postgres-nexus
+      - discovery-nexus
+    networks:
+      - red-nexus
+
+  # --- GEOGRAFIA NEXUS ---
+  ms-geografia-nexus:
+    build: ./ms-geografia
+    container_name: ms-geografia-nexus
+    environment:
+      - SERVER_PORT=8080
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://nexus-db:5432/db_nexus_geografia
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=12345
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-nexus:8761/eureka
+    depends_on:
+      - postgres-nexus
+      - discovery-nexus
+    networks:
+      - red-nexus
+
+  # --- CLIENTES NEXUS ---
+  ms-clientes-nexus:
+    build: ./ms-clientes
+    container_name: ms-clientes-nexus
+    environment:
+      - SERVER_PORT=8080
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://nexus-db:5432/db_nexus_clientes
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=12345
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-nexus:8761/eureka
+    depends_on:
+      - postgres-nexus
+      - discovery-nexus
+    networks:
+      - red-nexus
+
+networks:
+  red-nexus:
+    driver: bridge
