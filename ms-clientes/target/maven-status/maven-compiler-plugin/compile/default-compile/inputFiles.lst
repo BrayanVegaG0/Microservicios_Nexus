@@ -1,0 +1,17 @@
+C:\Microservicios_Nexus-main\Microservicios_Nexus-main\ms-clientes\src\main\java\com\nexus\ms_clientes\model\Cliente.java
+C:\Microservicios_Nexus-main\Microservicios_Nexus-main\ms-clientes\src\main\java\com\nexus\ms_clientes\exception\ClienteYaRegistradoException.java
+C:\Microservicios_Nexus-main\Microservicios_Nexus-main\ms-clientes\src\main\java\com\nexus\ms_clientes\repository\RepresentanteEmpresaRepository.java
+C:\Microservicios_Nexus-main\Microservicios_Nexus-main\ms-clientes\src\main\java\com\nexus\ms_clientes\controller\ClienteController.java
+C:\Microservicios_Nexus-main\Microservicios_Nexus-main\ms-clientes\src\main\java\com\nexus\ms_clientes\mapper\PersonaMapper.java
+C:\Microservicios_Nexus-main\Microservicios_Nexus-main\ms-clientes\src\main\java\com\nexus\ms_clientes\repository\EmpresaRepository.java
+C:\Microservicios_Nexus-main\Microservicios_Nexus-main\ms-clientes\src\main\java\com\nexus\ms_clientes\exception\GlobalExceptionHandler.java
+C:\Microservicios_Nexus-main\Microservicios_Nexus-main\ms-clientes\src\main\java\com\nexus\ms_clientes\exception\ClienteCreacionException.java
+C:\Microservicios_Nexus-main\Microservicios_Nexus-main\ms-clientes\src\main\java\com\nexus\ms_clientes\service\ClienteService.java
+C:\Microservicios_Nexus-main\Microservicios_Nexus-main\ms-clientes\src\main\java\com\nexus\ms_clientes\model\Empresa.java
+C:\Microservicios_Nexus-main\Microservicios_Nexus-main\ms-clientes\src\main\java\com\nexus\ms_clientes\dto\RegistroClientePersonaDTO.java
+C:\Microservicios_Nexus-main\Microservicios_Nexus-main\ms-clientes\src\main\java\com\nexus\ms_clientes\repository\ClienteRepository.java
+C:\Microservicios_Nexus-main\Microservicios_Nexus-main\ms-clientes\src\main\java\com\nexus\ms_clientes\model\RepresentanteEmpresa.java
+C:\Microservicios_Nexus-main\Microservicios_Nexus-main\ms-clientes\src\main\java\com\nexus\ms_clientes\config\WebConfig.java
+C:\Microservicios_Nexus-main\Microservicios_Nexus-main\ms-clientes\src\main\java\com\nexus\ms_clientes\MsClientesApplication.java
+C:\Microservicios_Nexus-main\Microservicios_Nexus-main\ms-clientes\src\main\java\com\nexus\ms_clientes\repository\PersonaRepository.java
+C:\Microservicios_Nexus-main\Microservicios_Nexus-main\ms-clientes\src\main\java\com\nexus\ms_clientes\model\Persona.java
