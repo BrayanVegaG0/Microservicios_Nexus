@@ -4,18 +4,46 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="84d790f3-c327-4268-bd05-a71b080308a6" name="Changes" comment="" />
+    <list default="true" id="84d790f3-c327-4268-bd05-a71b080308a6" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/copilot.data.migration.ask2agent.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/deploy.sh" beforeDir="false" afterPath="$PROJECT_DIR$/deploy.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-clientes/target/generated-sources/annotations/com/nexus/ms_clientes/mapper/PersonaMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/ms-clientes/target/generated-sources/annotations/com/nexus/ms_clientes/mapper/PersonaMapperImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-transacciones/src/main/java/com/nexus/ms_transacciones/client/SwitchClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/ms-transacciones/src/main/java/com/nexus/ms_transacciones/client/SwitchClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-transacciones/src/main/java/com/nexus/ms_transacciones/controller/TransaccionInterbancariaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ms-transacciones/src/main/java/com/nexus/ms_transacciones/controller/TransaccionInterbancariaController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-transacciones/src/main/java/com/nexus/ms_transacciones/dto/SwitchTransaccionDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/ms-transacciones/src/main/java/com/nexus/ms_transacciones/dto/SwitchTransaccionDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-transacciones/src/main/java/com/nexus/ms_transacciones/dto/SwitchTransaccionWrapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-transacciones/src/main/java/com/nexus/ms_transacciones/mapper/TransaccionMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/ms-transacciones/src/main/java/com/nexus/ms_transacciones/mapper/TransaccionMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-transacciones/src/main/java/com/nexus/ms_transacciones/model/Transaccion.java" beforeDir="false" afterPath="$PROJECT_DIR$/ms-transacciones/src/main/java/com/nexus/ms_transacciones/model/Transaccion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-transacciones/src/main/java/com/nexus/ms_transacciones/service/Impl/TransaccionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/ms-transacciones/src/main/java/com/nexus/ms_transacciones/service/Impl/TransaccionServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-transacciones/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/ms-transacciones/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-transacciones/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/ms-transacciones/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-transacciones/target/classes/com/nexus/ms_transacciones/client/SwitchClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/ms-transacciones/target/classes/com/nexus/ms_transacciones/client/SwitchClient.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-transacciones/target/classes/com/nexus/ms_transacciones/controller/TransaccionInterbancariaController.class" beforeDir="false" afterPath="$PROJECT_DIR$/ms-transacciones/target/classes/com/nexus/ms_transacciones/controller/TransaccionInterbancariaController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-transacciones/target/classes/com/nexus/ms_transacciones/dto/SwitchTransaccionDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/ms-transacciones/target/classes/com/nexus/ms_transacciones/dto/SwitchTransaccionDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-transacciones/target/classes/com/nexus/ms_transacciones/dto/SwitchTransaccionWrapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-transacciones/target/classes/com/nexus/ms_transacciones/mapper/TransaccionMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/ms-transacciones/target/classes/com/nexus/ms_transacciones/mapper/TransaccionMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-transacciones/target/classes/com/nexus/ms_transacciones/mapper/TransaccionMapperImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/ms-transacciones/target/classes/com/nexus/ms_transacciones/mapper/TransaccionMapperImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-transacciones/target/classes/com/nexus/ms_transacciones/model/Transaccion.class" beforeDir="false" afterPath="$PROJECT_DIR$/ms-transacciones/target/classes/com/nexus/ms_transacciones/model/Transaccion.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-transacciones/target/classes/com/nexus/ms_transacciones/service/Impl/TransaccionServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/ms-transacciones/target/classes/com/nexus/ms_transacciones/service/Impl/TransaccionServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-transacciones/target/generated-sources/annotations/com/nexus/ms_transacciones/mapper/TransaccionMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/ms-transacciones/target/generated-sources/annotations/com/nexus/ms_transacciones/mapper/TransaccionMapperImpl.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="MavenRunner">
     <option name="skipTests" value="true" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 4
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
   <component name="ProjectId" id="378WeC0f2JZAqs1ViNsONuhOV1g" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -27,6 +55,11 @@
     "Maven.cbs [install].executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Microservicios_Nexus-main/Microservicios_Nexus-main"
   }
 }]]></component>
@@ -57,5 +90,13 @@
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="github-copilot-workspace">
+    <instructionFileLocations>
+      <option value=".github/instructions" />
+    </instructionFileLocations>
+    <promptFileLocations>
+      <option value=".github/prompts" />
+    </promptFileLocations>
   </component>
 </project>

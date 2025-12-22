@@ -9,6 +9,7 @@ import com.nexus.ms_transacciones.repository.TransaccionRepository;
 import com.nexus.ms_transacciones.service.TransaccionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
@@ -24,6 +25,9 @@ public class TransaccionServiceImpl implements TransaccionService {
     private final SwitchClient switchClient;
     private final TransaccionMapper mapper;
 
+    @Value("${app.switch.banco-codigo}")
+    private String miBancoCodigo;
+
     @Override
     @Transactional
     public RespuestaTransferenciaDTO realizarTransferencia(SolicitudTransferenciaDTO solicitud) {
@@ -34,12 +38,18 @@ public class TransaccionServiceImpl implements TransaccionService {
         if (tx.getReferencia() == null)
             tx.setReferencia(tx.getInstructionId());
 
-        // FIX: Usar "idBancoDestino" que es el nombre correcto en la Entidad
-        // Transaccion
-        if (solicitud.getBancoDestinoId() != null) {
-            tx.setIdBancoDestino(solicitud.getBancoDestinoId());
+        // LOGICA DE MAPPING DE BANCOS
+        tx.setBancoOrigen(miBancoCodigo);
+
+        // Mapeo simple para Frontend:
+        // Si el usuario selecciona "Otro Banco" (ID != 2), INFERIMOS el banco destino
+        // por el BIN de la cuenta
+        if (solicitud.getBancoDestinoId() != null && solicitud.getBancoDestinoId() == 2) {
+            tx.setBancoDestino(miBancoCodigo); // Forzado Interno por UI
         } else {
-            tx.setIdBancoDestino(1);
+            // Es externo (o no especificado). Detectamos por BIN.
+            String codigoDetectado = detectarBancoPorBin(solicitud.getCuentaDestino());
+            tx.setBancoDestino(codigoDetectado);
         }
 
         tx = repository.save(tx);
@@ -49,8 +59,7 @@ public class TransaccionServiceImpl implements TransaccionService {
             cuentaClient.debitar(tx.getCuentaOrigen(), tx.getMonto());
 
             // 3. DECISIÓN: ¿Interna o Externa?
-            // 2 = NEXUS (Interno)
-            if (tx.getIdBancoDestino() != null && tx.getIdBancoDestino() == 2) {
+            if (miBancoCodigo.equals(tx.getBancoDestino())) {
                 // --- TRANSFERENCIA INTERNA ---
                 // Acreditar directamente en local
                 cuentaClient.acreditar(tx.getCuentaDestino(), tx.getMonto());
@@ -58,7 +67,7 @@ public class TransaccionServiceImpl implements TransaccionService {
                 // --- TRANSFERENCIA EXTERNA ---
                 // Enviar al Switch Central
                 SwitchTransaccionDTO switchDto = mapper.entityToSwitchDto(tx);
-                switchClient.enviar(new SwitchTransaccionWrapper(switchDto));
+                switchClient.enviar(switchDto);
             }
 
             // Éxito
@@ -72,7 +81,7 @@ public class TransaccionServiceImpl implements TransaccionService {
             // 4. COMPENSACIÓN (Deshacer)
             if ("PENDING".equals(tx.getEstado())) {
                 try {
-                    // Solo compensamos si el dinero salió (si el error no fue SaldoInsuficiente)
+                    // Solo compensamos si el dinero salió
                     if (!e.getMessage().contains("Fondos insuficientes")) {
                         cuentaClient.compensar(tx.getCuentaOrigen(), tx.getMonto());
                     }
@@ -89,8 +98,8 @@ public class TransaccionServiceImpl implements TransaccionService {
     @Override
     @Transactional
     public void procesarPagoEntrante(SwitchTransaccionDTO dto) {
-        if (repository.existsByInstructionId(dto.getIdInstruccion())) {
-            return; // Idempotencia: Ya la procesamos
+        if (repository.existsByInstructionId(dto.getInstructionId())) {
+            return; // Idempotencia
         }
 
         Transaccion tx = mapper.switchDtoToEntity(dto);
@@ -98,13 +107,33 @@ public class TransaccionServiceImpl implements TransaccionService {
         tx = repository.save(tx);
 
         try {
+            // Es un pago entrante, solo acreditamos
             cuentaClient.acreditar(tx.getCuentaDestino(), tx.getMonto());
             tx.setEstado("COMPLETED");
             tx.setFechaEjecucion(LocalDateTime.now());
         } catch (Exception e) {
             tx.setEstado("FAILED");
-            throw e; // Lanzamos error para que el Switch sepa que falló
+            tx.setMensajeError(e.getMessage());
+            throw e; // Lanzamos error para que el Switch sepa que falló (retornará 500 o error
+                     // mapeado)
         }
         repository.save(tx);
+    }
+
+    private String detectarBancoPorBin(String cuenta) {
+        if (cuenta == null || cuenta.length() < 6)
+            return "ARCBANK"; // Default o Error
+
+        String bin = cuenta.substring(0, 6);
+        if (bin.startsWith("22"))
+            return "BANTEC";
+        if (bin.startsWith("23"))
+            return "ARCBANK";
+        if (bin.startsWith("27"))
+            return "NEXUS";
+        if (bin.startsWith("28"))
+            return "ECUSOL";
+
+        return "ARCBANK"; // Default fallback
     }
 }

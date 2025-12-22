@@ -1,54 +1,33 @@
 #!/bin/bash
 
 # ==========================================
-# SCRIPT MAESTRO DE DESPLIEGUE ECUASOL
+# SCRIPT DE DESPLIEGUE - NEXUS MONOREPO
 # ==========================================
 
-echo "🚀 Iniciando despliegue de Microservicios Ecuasol..."
+echo "?? Iniciando despliegue de Nexus..."
 
-# 1. Definir la lista de carpetas (nombres de los repos)
-# Asegúrate de que estos nombres coincidan EXACTAMENTE con las carpetas
-SERVICES=(
-    "gateway-server"
-    "ms-cuentas"
-    "ms-clientes"
-    "ms-transacciones"
-    "ms-geografiaMongo"
-    "BackEnd_WEB_EcuSol"
-    "SitioWeb_EcuSol"
-    "Stack_Ventanilla" 
-)
+# 1. Actualizar el código (Al ser monorepo, solo necesitas un pull en la raíz)
+echo "?? Actualizando repositorio principal..."
+git checkout main
+git pull origin main
 
-# 2. Iterar sobre cada servicio y actualizar código (Git Pull)
-echo "🔄 Actualizando repositorios..."
+# Nota: Si te da error de "local changes", usa esta línea en su lugar para forzar la actualización:
+# git fetch --all && git reset --hard origin/main
 
-for service in "${SERVICES[@]}"; do
-    if [ -d "$service" ]; then
-        echo "⬇️  Actualizando $service..."
-        cd $service
-        git checkout main  # O 'master', según tu rama
-        git pull origin main
-        cd ..
-    else
-        echo "⚠️  ALERTA: La carpeta $service no existe. Saltando..."
-    fi
-done
-
-# 3. Bajar contenedores viejos (Opcional, para limpieza profunda)
-# echo "🛑 Deteniendo contenedores..."
+# 2. Bajar contenedores (Opcional: descomenta si necesitas reiniciar la BD desde cero)
+# echo "?? Deteniendo servicios..."
 # docker compose down
 
-# 4. Reconstruir y Levantar (Docker Compose V2)
-# --build: Fuerza la recompilación si hubo cambios en el código
-# -d: Detached mode (segundo plano)
-# --remove-orphans: Limpia contenedores que ya no están en el yaml
-echo "🏗️  Construyendo y levantando contenedores Docker..."
+# 3. Construir y Levantar
+# --build: Recompila las imágenes con los cambios del git pull
+# --remove-orphans: Borra contenedores viejos si cambiaste nombres en el yaml
+echo "???  Construyendo y levantando contenedores Docker..."
 docker compose up -d --build --remove-orphans
 
-# 5. Limpieza de imágenes basura (Dangling images) para no llenar el disco
-echo "🧹 Limpiando imágenes antiguas..."
+# 4. Limpieza
+echo "?? Limpiando imágenes antiguas (ahorrando espacio)..."
 docker image prune -f
 
-echo "✅ ¡Despliegue completado exitosamente!"
-echo "🌍 Gateway activo en puerto 8080"
+echo "? ¡Despliegue completado!"
+echo "?? Estado actual:"
 docker compose ps

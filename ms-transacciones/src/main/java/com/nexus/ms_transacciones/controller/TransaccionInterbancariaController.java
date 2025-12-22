@@ -1,6 +1,6 @@
 package com.nexus.ms_transacciones.controller;
 
-import com.nexus.ms_transacciones.dto.SwitchTransaccionWrapper;
+import com.nexus.ms_transacciones.dto.SwitchTransaccionDTO;
 import com.nexus.ms_transacciones.service.TransaccionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -18,9 +18,9 @@ public class TransaccionInterbancariaController {
     private final TransaccionService service;
 
     @Operation(summary = "Recibir pago externo")
-    @PostMapping("/callback")
-    public ResponseEntity<Void> recibir(@Valid @RequestBody SwitchTransaccionWrapper wrapper) {
-        service.procesarPagoEntrante(wrapper.getTransaccion());
+    @PostMapping("/webhook") // Endpoint estandar del switch
+    public ResponseEntity<Void> recibir(@Valid @RequestBody SwitchTransaccionDTO dto) {
+        service.procesarPagoEntrante(dto);
         return ResponseEntity.ok().build();
     }
 }

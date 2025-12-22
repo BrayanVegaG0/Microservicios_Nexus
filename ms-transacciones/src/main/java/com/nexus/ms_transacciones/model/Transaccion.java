@@ -27,8 +27,12 @@ public class Transaccion {
     @Column(unique = true)
     private String instructionId;
     private String referencia;
-    private Integer idBancoOrigen;
-    private Integer idBancoDestino;
+    @Column(name = "banco_origen_codigo")
+    private String bancoOrigen;
+
+    @Column(name = "banco_destino_codigo")
+    private String bancoDestino;
+
     private String mensajeError;
 
     // Concurrencia
